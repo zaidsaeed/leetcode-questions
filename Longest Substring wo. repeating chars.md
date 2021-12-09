@@ -28,3 +28,26 @@ class Solution:
 ```
 
 # Solution Two
+### O(n) Solution Runtime
+### O(1) space complexity
+
+```
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        pt1, pt2 = 0, 0
+        res = 0
+        dict = {}
+        while pt2 < len(s):
+            if s[pt2] in dict:
+                if (pt2 - pt1) > res:
+                    res = pt2 - pt1
+                pt1 += 1
+                pt2 = pt1
+                dict = {}
+            else:
+                dict[s[pt2]] = True
+                pt2 += 1
+        if (pt2 - pt1) > res:
+            res = pt2 - pt1
+        return res   
+```
