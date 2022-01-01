@@ -1,0 +1,19 @@
+class Solution:
+    def groupThePeople(self, groupSizes: List[int]) -> List[List[int]]:
+        resMap = {}
+        for i in range(len(groupSizes)):
+            gSize = groupSizes[i]
+            if gSize in resMap:
+                resMap[gSize].append(i)
+            else:
+                resMap[gSize] = [i]
+        ans = []
+        for key in resMap.keys():
+            if len(resMap[key]) == key:
+                ans.append(resMap[key])
+            else:
+                for i in range(0, len(resMap[key]), key):
+                    ans.append(resMap[key][i:i+key])
+        return ans
+        
+https://leetcode.com/problems/group-the-people-given-the-group-size-they-belong-to/
