@@ -1,0 +1,22 @@
+https://leetcode.com/problems/valid-parentheses/submissions/
+
+class Solution:
+    def isValid(self, s: str) -> bool:
+        bracketMap = {
+            '[': ']',
+            '(': ')',
+            '{': '}'
+        }
+        openingPar = ['(', '[', '{']
+        closingPar = [')', ']', '}']
+        stack = []
+        for char in s:
+            if char in openingPar:
+                stack.append(char)
+            elif char in closingPar:
+                if len(stack) == 0:
+                    return False
+                elem = stack.pop()
+                if bracketMap[elem] != char:
+                    return False
+        return len(stack) == 0
