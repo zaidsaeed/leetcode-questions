@@ -1,0 +1,35 @@
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        x, y = len(matrix[0])-1, len(matrix)-1
+        minP, maxP, ans = 0, y, -1
+        while minP <= maxP:
+            mid = minP + (maxP-minP+1) // 2
+            midElem = matrix[mid][x]
+            if midElem > target:
+                ans = mid
+                maxP = mid - 1
+            elif midElem < target:
+                minP = mid + 1
+            else:
+                return True
+            
+        rowToLookAt = ans
+        
+        
+        arrToSearch = matrix[rowToLookAt]
+        print(arrToSearch)
+        minP, maxP, mid = 0, x, 0
+        while minP <= maxP:
+            mid = minP + ((maxP-minP) // 2) 
+            midElem = arrToSearch[mid]
+            print(midElem)
+            if midElem > target:
+                maxP = mid - 1
+            elif midElem < target:
+                minP = mid + 1
+            else:
+                return True
+            
+        return arrToSearch[mid] == target
+        
+     https://leetcode.com/problems/search-a-2d-matrix
