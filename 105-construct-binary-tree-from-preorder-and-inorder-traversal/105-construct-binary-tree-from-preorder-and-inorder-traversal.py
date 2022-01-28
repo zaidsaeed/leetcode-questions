@@ -5,25 +5,37 @@
 #         self.left = left
 #         self.right = right
 
+from collections import OrderedDict
+
 class Solution:
-    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
-        if (len(inorder) == 0 and len(preorder) == 0):
-            return None
-        val = preorder.pop(0)
-        root = TreeNode(val, None, None)
-        leftArr, rightArr, index = self.buildArr(inorder, val)
-        root.left = self.buildTree(preorder[:index], leftArr)
-        root.right = self.buildTree(preorder[index:], rightArr)
-        return root
+    preorderIndex = 0
     
-    def buildArr(self, inOrderArr, elem):
-        index = 0
-        for i in range(0, len(inOrderArr), 1):
-            val = inOrderArr[i]
-            if val == elem:
-                index = i
-                break
-        return (inOrderArr[0:index], inOrderArr[index+1:], index)
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        inOrderMap = self.buildIntMap(inorder)
+        left = 0
+        right = len(inorder) - 1
+        return self.buildTreeRec(preorder, inorder, left, right, inOrderMap)
+    
+    
+    def buildIntMap(self, inorder):
+        charMap = {}
+        for i in range(len(inorder)):
+            charMap[inorder[i]] = i 
+        return charMap
+        
+    
+    def buildTreeRec(self, preorder, inorder, left, right, inOrderMap):
+        print(self.preorderIndex)
+        if (left > right):
+            return None
+        val = preorder[self.preorderIndex]
+        self.preorderIndex += 1
+        root = TreeNode(val, None, None)
+        index = inOrderMap[val]
+        root.left = self.buildTreeRec(preorder, inorder, left, index - 1, inOrderMap)
+        root.right = self.buildTreeRec(preorder, inorder, index + 1, right, inOrderMap)
+        return root
+
                                 
 
     
