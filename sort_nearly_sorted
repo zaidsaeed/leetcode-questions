@@ -1,0 +1,18 @@
+import heapq
+
+def sort_k_messed_array(arr, k):
+  ans = [0 for i in range(len(arr))]
+  heap = arr[:k+1]
+  heapq.heapify(heap)
+  index = 0
+  for i in range(k+1, len(arr)):
+    print('here')
+    ans[index] = heapq.heappop(heap)
+    index += 1
+    heapq.heappush(heap, arr[i])
+  while heap:
+    ans[index] = heapq.heappop(heap)
+    index += 1
+  return ans
+  
+  https://www.geeksforgeeks.org/nearly-sorted-algorithm/
