@@ -1,0 +1,28 @@
+2164. Sort Even and Odd Indices Independently
+User Accepted:8993
+User Tried:9564
+Total Accepted:9222
+Total Submissions:14311
+Difficulty:Easy
+You are given a 0-indexed integer array nums. Rearrange the values of nums according to the following rules:
+
+Sort the values at odd indices of nums in non-increasing order.
+For example, if nums = [4,1,2,3] before this step, it becomes [4,3,2,1] after. The values at odd indices 1 and 3 are sorted in non-increasing order.
+Sort the values at even indices of nums in non-decreasing order.
+For example, if nums = [4,1,2,3] before this step, it becomes [2,1,4,3] after. The values at even indices 0 and 2 are sorted in non-decreasing order.
+Return the array formed after rearranging the values of nums.
+
+
+class Solution:
+    def sortEvenOdd(self, nums: List[int]) -> List[int]:
+        even_idx = [nums[i] for i in range(0, len(nums), 2)]
+        odd_idx = [nums[i] for i in range(1, len(nums), 2)]
+        ans = []
+        even_idx.sort()
+        odd_idx.sort(reverse=True)
+        while len(even_idx) > 0 or len(odd_idx) > 0:
+            if len(even_idx) > 0:
+                ans.append(even_idx.pop(0))
+            if len(odd_idx) > 0:
+                ans.append(odd_idx.pop(0))
+        return ans
