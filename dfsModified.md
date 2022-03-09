@@ -1,3 +1,4 @@
+```
 graph = {
   '1' : ['2', '3', '8'],
   '2' : ['4'],
@@ -62,3 +63,4 @@ print(backEdges)
 print(crossEdges)
 print(forwardEdges)
 print(inOut)
+```
