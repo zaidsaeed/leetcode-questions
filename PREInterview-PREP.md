@@ -16,3 +16,6 @@ Reference: https://www.geeksforgeeks.org/variants-of-binary-search/
 # Construct a binary tree from its traversals
 
 # Get 4 diagonals from a matrix
+
+# Kadane's algorithm and its modifications
+## https://leetcode.com/problems/longest-palindromic-substring/submissions/
