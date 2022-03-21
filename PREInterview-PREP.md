@@ -17,5 +17,4 @@ Reference: https://www.geeksforgeeks.org/variants-of-binary-search/
 
 # Get 4 diagonals from a matrix
 
-# Kadane's algorithm and its modifications
-## https://leetcode.com/problems/longest-palindromic-substring/submissions/
+# Kadane's algorithm and its modifications (https://leetcode.com/problems/longest-palindromic-substring/submissions/)
