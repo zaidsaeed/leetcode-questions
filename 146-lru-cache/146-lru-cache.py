@@ -6,45 +6,62 @@ class Node:
         self.next = next
 
 class DLL:
-    def __init__(self, head=None, tail = None):
-        self.head = head
-        self.tail = tail
+    def __init__(self):
+        self.lruNode = None
+        self.mruNode = None
+        self.key2node = {}
         
-    def addfirst(self, node):
-        nbr = self.head.next
-        node.next = nbr
-        
-        nbr.prev = node
-        self.head.next = node
-        node.prev = self.head
+    def addFirst(self, node):
+        self.key2node[node.key] = node
+        if self.mruNode:
+            node.next = self.mruNode
+            self.mruNode.prev = node
+            self.mruNode = self.mruNode.prev
+        else:
+            self.lruNode, self.mruNode = node, node
         
     def remove(self, node):
-        prevnbr = node.prev
-        nextnbr = node.next
-        prevnbr.next = nextnbr
-        nextnbr.prev = prevnbr
+        previousNode = node.prev
+        nextNode = node.next
+        if previousNode:
+            previousNode.next = nextNode
+        else:
+            self.mruNode = node.next
+        if nextNode:
+            nextNode.prev = previousNode
+        else:
+            self.lruNode = node.prev
+        node.prev = None
         node.next = None
-        Node.prev = None
-        
-    def moveinfront(self, node):
-        # print(self.display())
+        del self.key2node[node.key]
+            
+    def moveToMRU(self, node):
         self.remove(node)
-        # print(self.display())
-        self.addfirst(node)  
-        # print(self.display())
-        # print()
+        self.addFirst(node)
+    
+    def removeLRU(self):
+        del self.key2node[self.lruNode.key]
+        self.lruNode = self.lruNode.prev
+        if self.lruNode:
+            self.lruNode.next = None
+        else:
+            self.mruNode = None
+        
 
-    # def display(self):
-    #     head = self.head
-    #     tail = self.tail
-    #     while(head != None):
-    #         print(head.key, head.value, end  = "->")
-    #         head = head.next
-    #     print()
-    #     while(tail != None):
-    #         print(tail.key, tail.value, end= "<-")
-    #         tail = tail.prev
-    #     print()
+    def display(self):
+        head = self.mruNode
+        tail = self.lruNode
+        print('         ')
+        print('--START--')
+        while(head != None):
+            print(head.key, head.value, end  = "->")
+            head = head.next
+        while(tail != None):
+            print(tail.key, tail.value, end= "<-")
+            tail = tail.prev
+        print('        ')
+        print('--END--')
+        
 
 class LRUCache(object):
     def __init__(self, capacity):
@@ -52,53 +69,43 @@ class LRUCache(object):
         :type capacity: int
         """
         self.capacity = capacity
-        self.dict1 = {}
-        self.dl = DLL()
-        head = Node()
-        tail = Node()
-        head.next = tail
-        tail.prev= head
-        self.dl.head = head
-        self.dl.tail = tail
+        self.count = 0
+        self.dll = DLL()
         
-
     def get(self, key):
-        k = key
-        if k in self.dict1:
-            node = self.dict1[k]
-            self.dl.moveinfront(node)
-            return(node.value)
-
-        else:
-            return(-1)
         """
         :type key: int
         :rtype: int
         """
+        if key in self.dll.key2node:
+            node = self.dll.key2node[key]
+            self.dll.moveToMRU(node)
+            # self.dll.display()
+            return node.value
+        else:
+            # self.dll.display()
+            return -1
+        
+        
         
 
     def put(self, key, value):
-        k = key
-        v = value
-        if k in self.dict1:
-            node = self.dict1[k]
-            node.value = v
-            self.dl.moveinfront(node)
-            #size check
-        else:
-            if len(self.dict1)<self.capacity:
-                add = Node(k,v)
-                self.dl.addfirst(add)
-            else:
-                node = self.dl.tail.prev
-                rem_k = node.key
-                self.dict1.pop(rem_k)
-                self.dl.remove(node)
-                add = Node(k,v)
-                self.dl.addfirst(add)
-            self.dict1[k] = add
         """
         :type key: int
         :type value: int
         :rtype: None
         """
+        node = Node(key, value, None, None)
+        if key in self.dll.key2node:
+            node = self.dll.key2node[key]
+            node.value = value
+            self.dll.moveToMRU(node)
+        elif self.count < self.capacity:
+            self.dll.addFirst(node)
+            self.count += 1
+        elif self.count == self.capacity:
+            self.dll.removeLRU()
+            self.dll.addFirst(node)
+        # self.dll.display()
+        
+            
