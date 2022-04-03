@@ -15,7 +15,8 @@ class Solution:
                             elemToAdd = candidates[j]
                             newArr = elem[0][:]
                             newArr.append(elemToAdd)
-                            queue.append((newArr, (elem[1] + elemToAdd), j))
+                            if (elem[1] + elemToAdd) <= target:
+                                queue.append((newArr, (elem[1] + elemToAdd), j))
         return ans
             
         
