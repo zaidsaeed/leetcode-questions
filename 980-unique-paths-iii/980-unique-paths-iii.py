@@ -24,7 +24,7 @@ class Solution:
                     dfs(x-1, y, n, m, grid, zeroCount, vCount)
                     dfs(x, y+1, n, m, grid, zeroCount, vCount)
                     dfs(x, y-1, n, m, grid, zeroCount, vCount)
-                    grid[x][y] = 1
+                    # grid[x][y] = 1
                 elif elem == 0:
                     grid[x][y] = -1
                     dfs(x+1, y, n, m, grid, zeroCount, vCount + 1)
