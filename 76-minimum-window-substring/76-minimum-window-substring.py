@@ -51,9 +51,6 @@ class Solution:
                         del windowMap[filteredS[l][0]]
                     l += 1
                 r += 1
-        print(filteredS)
-        print(l)
-        print(r)
         return ans
                 
             
