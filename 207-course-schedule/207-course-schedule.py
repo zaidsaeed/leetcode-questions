@@ -33,7 +33,7 @@ class Solution:
         
         def dfs(graph, numCourses, visitedMap):
             for node in range(numCourses):
-                if not visitedMap[node]:
+                if not self.cycle and not visitedMap[node]:
                     visited = []
                     visited.append(node)
                     dfsRec(graph, visited, node, visitedMap)
