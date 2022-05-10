@@ -6,17 +6,19 @@
 #         self.right = right
 class Solution:
     count = 0
-    ans = None
+
     
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        self.kRec(root, k)
-        return self.ans
+        return self.kRec(root, k)
     
     def kRec(self, root, k):    
         if root:
-            self.kRec(root.left, k)
+            left = self.kRec(root.left, k)
+            if left is not None:
+                return left
             self.count += 1
             if self.count == k:
-                self.ans = root.val
-                return
-            self.kRec(root.right, k)
+                return root.val
+            right = self.kRec(root.right, k)
+            if right is not None:
+                return right
