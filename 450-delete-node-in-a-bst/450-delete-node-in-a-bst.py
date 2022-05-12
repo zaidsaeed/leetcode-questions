@@ -33,7 +33,6 @@ class Solution:
                 repl = self.getNextInorder(root)
                 root.val = repl.val
                 root.right = self.deleteNode(root.right, repl.val)
-                return root
         elif root and root.val > key:
             root.left = self.deleteNode(root.left, key)
         elif root and root.val < key:
