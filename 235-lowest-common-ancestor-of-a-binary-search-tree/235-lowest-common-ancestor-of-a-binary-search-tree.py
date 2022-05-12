@@ -7,31 +7,16 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        uf = {} #node: parent
-        nodes = {}
+        pVal = min(p.val, q.val)
+        qVal = max(p.val, q.val)
+        return self.lcaRec(root, pVal, qVal)
         
-        def dfs(parent, node, uf, nodes):
-            if node:
-                uf[node.val] = parent
-                nodes[node.val] = node
-                dfs(node, node.left, uf, nodes)
-                dfs(node, node.right, uf, nodes)
-        
-        dfs(root, root, uf, nodes)
-        
-        pParents = []
-        while p.val != root.val:
-            pParents.append(p.val)
-            p = uf[p.val]
-        pParents.append(root.val)
-                
-        qParents = []
-        while q.val != root.val:
-            qParents.append(q.val)
-            q = uf[q.val]
-        qParents.append(root.val)
-                
-        for p in pParents:
-            if p in qParents:
-                return nodes[p]        
+    def lcaRec(self, root, p, q):
+        if root.val >= p and root.val <= q:
+            return root
+        elif root.val > p and root.val > q:
+            return self.lcaRec(root.left, p, q)
+        else:
+            return self.lcaRec(root.right, p, q)
+            
         
