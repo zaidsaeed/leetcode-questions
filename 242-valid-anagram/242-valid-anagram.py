@@ -1,9 +1,7 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         shorter, longer = None, None
-        if len(s) > len(t):
-            return False
-        elif len(t) > len(s):
+        if len(s) != len(t):
             return False
         else:
             shorter = s
