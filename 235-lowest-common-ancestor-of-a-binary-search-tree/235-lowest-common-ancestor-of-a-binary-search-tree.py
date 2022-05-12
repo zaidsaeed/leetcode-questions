@@ -30,9 +30,6 @@ class Solution:
             qParents.append(q.val)
             q = uf[q.val]
         qParents.append(root.val)
-            
-        print(pParents)
-        print(qParents)
                 
         for p in pParents:
             if p in qParents:
