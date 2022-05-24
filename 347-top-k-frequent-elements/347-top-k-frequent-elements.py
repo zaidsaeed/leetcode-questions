@@ -3,16 +3,16 @@ import heapq
 
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        counts = Counter(nums)
-        heapPairs = [(value, key) for (key, value) in counts.items()]
-        heap = heapPairs[0:k]
-        heapq.heapify(heap)
-        items = counts.items()
-        for i in range(k, len(heapPairs)):
-            item = heapPairs[i]
-            minItem = heapq.heappop(heap)
-            if minItem[0] < item[0]:
-                heapq.heappush(heap, item)
+        numsDict = Counter(nums)
+        heap = []
+        for num, count in numsDict.items():
+            if len(heap) < k:
+                heapq.heappush(heap, (count, num))
             else:
-                heapq.heappush(heap, minItem)
-        return [item[1] for item in heap]
+                currentMin = heapq.heappop(heap)
+                if currentMin[0] > count:
+                    heapq.heappush(heap, currentMin)
+                else:
+                    heapq.heappush(heap, (count, num))
+        return [elem[1] for elem in heap]
+        
