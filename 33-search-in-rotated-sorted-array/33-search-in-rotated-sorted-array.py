@@ -1,38 +1,45 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         
-        def findMin(nums):
-            l, h = 0, len(nums) - 1
-            while l < h:
-                m = l + ((h-l) // 2)
-                mid = nums[m]
-                if mid > nums[h]:
-                    l = m + 1
-                else:
-                    h = m
-            return l
+        minIndex = self.findMinIndex(nums)
         
-        def binSearch(arr, target):
-            l, h = 0, len(arr) - 1
-            while l <= h:
-                m = l + ((h-l) // 2)
-                mid = arr[m]
-                if mid == target:
-                    return m
-                elif mid > target:
-                    h = m - 1
-                else:
-                    l = m + 1
-            return -1
+        print(minIndex)
         
-        minIndex = findMin(nums)
-        arr = None
-        if (target > nums[-1]):
-            arr = nums[:minIndex]
-            return binSearch(arr, target)
-        else:
-            arr = nums[minIndex:]
-            ans = binSearch(arr, target) 
+        if target >= nums[minIndex] and target <= nums[-1]:
+            ans = self.binSearch(nums[minIndex:] ,target)
             if ans != -1:
-                return minIndex + binSearch(arr, target)
-            return -1
+                return minIndex + ans
+            else:
+                return -1
+        ans = self.binSearch(nums[0:minIndex] ,target)
+        if ans != -1:
+            return self.binSearch(nums[0:minIndex] ,target)
+        
+        return -1
+    
+    def binSearch(self, nums, target):
+        l, r = 0, len(nums)-1
+        while l <= r:
+            mid = l + ((r-l) // 2)
+            if nums[mid] < target:
+                l = mid + 1
+            elif nums[mid] == target:
+                return mid
+            else:
+                r = mid - 1
+        
+        return -1
+    def findMinIndex(self, nums):
+        l, r = 0, len(nums)-1
+        minElem = 0
+        while l <= r:
+            mid = l + ((r-l) // 2)
+            minElem = mid
+            if nums[mid] > nums[r]:
+                l = mid + 1
+            elif nums[mid] == nums[r]:
+                break
+            else:
+                r = mid
+        
+        return minElem
