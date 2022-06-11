@@ -16,9 +16,7 @@ class Solution:
         while arr:
             elem = arr.pop()
             # add closing parenthesis
-            elemPC = elem.copy()
-            elemPC[1] += 1
-            elemPC[2] += ')'
+            elemPC = [elem[0], elem[1]+1, elem[2]+')']
             
             if elemPC[0] == n and elemPC[1] == n:
                 ans.append(elemPC[2])
@@ -26,9 +24,7 @@ class Solution:
                 arr.append(elemPC)
             
             # add opening paranthesis
-            elemPO = elem.copy()
-            elemPO[0] += 1
-            elemPO[2] += '('
+            elemPO = [elem[0]+1, elem[1], elem[2]+'(']
             
             if elemPO[0] == n and elemPO[1] == n:
                 ans.append(elemPO[2])
