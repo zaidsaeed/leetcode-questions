@@ -1,38 +1,36 @@
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        if amount == 0:
-            return 0
         
-        q, dp = [], [float('inf') for i in range(amount+1)]
+        cache = {}
         
         for coin in coins:
-            if coin < amount:
-                dp[coin] = 1
-                q.append(coin)
-            elif coin == amount:
-                return 1
+            cache[coin] = 1
+        
+        def coinChangeRec(coins, amount, cache):
+            if amount < 0:
+                return float('inf')
             
-        while q:
-            val = q.pop(0)
-            count = dp[val]
-            # print(val)
-            # print(count)
-            # print('     ')
+            if amount == 0:
+                return 0
+            
+            if amount in cache:
+                return cache[amount]
+            
+            ans = float('inf')
+            
             for coin in coins:
-                if val + coin < amount and dp[val + coin] == float('inf'):
-                    q.append(val + coin)
-                    dp[val+coin] = min(dp[val+coin], count+1)
-                elif val + coin == amount:
-                    return count + 1
+                subProbAns = coinChangeRec(coins, amount - coin, cache)
+                if subProbAns != -1:
+                    subProbAns += 1
+                else:
+                    subProbAns = float('inf')
+                ans = min(ans, subProbAns)
+            
+            if ans == float('inf'):
+                cache[amount] = -1
+            else:
+                cache[amount] = ans
+            
+            return cache[amount]
         
-        return -1
-
-
-    '''
-        coins = [1,2,5], amount = 11
-        dp = [_, 1, 1, _, _, 1, 2, 2, 3, _, 3]    
-                  
-                       
-        
-    
-    '''
+        return coinChangeRec(coins, amount, cache)       
