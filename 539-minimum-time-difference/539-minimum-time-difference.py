@@ -32,23 +32,7 @@ class Solution:
         
         return ans
     
-    
-    def findClosestTp(self, buckets, num):
-        #search left 
-        i = num - 1
-        if i == -1:
-            i = 1439
-        found = buckets[i] == 1
-        countLeft = 1
-        while not found:
-            countLeft += 1
-            i -= 1
-            if i == -1:
-                i = 1439
-            found = buckets[i] == 1
 
-        return countLeft
-    
     def convertToNum(self, tp):
         mins = int(tp[3] + tp[4])
         hrs = int(tp[0] + tp[1])
