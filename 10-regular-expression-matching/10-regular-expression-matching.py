@@ -5,21 +5,45 @@ class Solution:
         
         # dp[0][0] = 1, since empty string matches empty pattern
         dp[0][0] = 1
-        # for an empty strings, it is still possible to have a pattern to match it
-        # the patter has to be like #*#*#*#*, and all * means empty/0 elems
-        for i in range(2, p_len+1):
-            if p[i-1]=='*' and dp[0][i-2]:
-                dp[0][i] = 1
+        
+        #firstt row only
+        for j in range(1, p_len):
+            if p[j] == '*':
+                dp[0][j+1] = dp[0][j-1]
         
         for i in range(1, s_len+1):
             for j in range(1, p_len+1):
-                if (s[i-1]==p[j-1] or p[j-1]=='.'):
+                first_match = p[j-1] in {s[i-1], '.'}
+                if first_match:
                     dp[i][j] = dp[i-1][j-1]
-                    
-                elif p[j-1]=='*':
-                    if p[j-2] != s[i-1] and p[j-2]!='.':       
-                        dp[i][j] = dp[i][j-2]
-                    else: 
-                        dp[i][j] = dp[i][j-1] or dp[i][j-2] or dp[i-1][j]
-                        
+                elif p[j-1] == '*':
+                    if dp[i][j-2]:
+                        dp[i][j] = 1
+                    elif s[i-1] == p[j-2] or p[j-2] == '.':
+                        dp[i][j] = dp[i-1][j]
+        
+        print(dp)
         return dp[-1][-1]
+    
+    
+    
+    '''
+    
+    
+                a *
+              t f f
+            a f t 
+            a f
+                x a * b . c
+              t f f f f f f
+            x f
+            a f
+            a f
+            b f
+            y f
+            c f
+    
+    
+    
+    
+    '''
