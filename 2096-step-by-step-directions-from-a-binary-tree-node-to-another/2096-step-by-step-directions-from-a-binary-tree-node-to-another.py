@@ -11,7 +11,7 @@ class Solution:
         self.createUF(uf, root, -1, None)
         # print(uf)
         lcaNode = self.getLCA(root, uf, startValue, destValue)
-        print(lcaNode)
+        # print(lcaNode)
         return self.createString(startValue, destValue, uf, lcaNode)
     
     def createUF(self, uf, root, parent, LorR):
@@ -31,8 +31,8 @@ class Solution:
             destValParents.append(destValue)
             destValue = uf[destValue][0]
         
-        print(startValParents)
-        print(destValParents)
+        # print(startValParents)
+        # print(destValParents)
         
         for i in range(0, len(startValParents)):
             parent = startValParents[i]
