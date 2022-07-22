@@ -1,24 +1,30 @@
 class Solution:
     def numberOfPairs(self, nums: List[int]) -> List[int]:
-        nums.sort()
-        ans = [0 , 0]
-        i = 0
+        numsMap = {}
         
-        while i < len(nums) - 1:
-            if nums[i] == nums[i+1]:
-                ans[0] += 1
-                i += 2
+        for num in nums:
+            if num in numsMap:
+                numsMap[num] = numsMap[num] + 1
             else:
-                ans[1] += 1
-                i += 1
+                numsMap[num] = 1
         
-        if i < len(nums):
-            ans[1] += 1
+        #num of pairs, num of singles
+        
+        ans = [0, 0]
+        
+        for val in numsMap.values():
+            ans[0] += (val // 2)
+            ans[1] += (val % 2)
         
         return ans
     
-    '''
-        [1, 1, 2, 2, 2, 3]
-                        i
     
     '''
+        [1,3,2,1,3,2,2]
+                 ^
+        
+        map = {1: 2, 2: 3, 3: 2}
+        
+        ans = [2, 1]
+    '''
+            
