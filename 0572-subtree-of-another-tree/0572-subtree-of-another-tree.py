@@ -19,7 +19,8 @@ class Solution:
                 return True
         if isMatch:
             return False
-        return self.isSubtreeRec(root.left, subRoot, False) or self.isSubtreeRec(root.right, subRoot, False)
+        else:
+            return self.isSubtreeRec(root.left, subRoot, False) or self.isSubtreeRec(root.right, subRoot, False)
         
         
         '''
