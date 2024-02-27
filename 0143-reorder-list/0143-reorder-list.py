@@ -8,33 +8,41 @@ class Solution:
         """
         Do not return anything, modify head in-place instead.
         """
-        nodeMap = {}
-        ptr, cnt = head, 1
+        if not head or not head.next:
+            return head
+            
+        slow, fast = head, head.next
+        while fast.next and fast.next.next:
+            slow = slow.next
+            fast = fast.next.next
+            
+        prevPtr, ptr = None, slow.next
+        
+        slow.next = None
         while ptr:
+            oldNext = ptr.next
+            ptr.next = prevPtr
             prevPtr = ptr
-            nodeMap[cnt] = ptr
-            cnt += 1
-            ptr = ptr.next
-            prevPtr.next = None
+            ptr = oldNext
         
-        numNodes = cnt - 2
-        idx = 1
-        res, ptr = nodeMap[idx], nodeMap[idx]
-        leftSide = False
-        while numNodes != 0:
-            if leftSide:
-                ptr.next = nodeMap[idx]
+        head1, head2 = head.next, prevPtr
+        ans, ptr = head, head
+        i = 1
+        while head1 and head2:
+            if i % 2 != 0:
+                ptr.next = head2
+                head2 = head2.next
             else:
-                ptr.next = nodeMap[cnt - idx]
-                idx += 1
-            leftSide = not leftSide
+                ptr.next = head1
+                head1 = head1.next
             ptr = ptr.next
-            numNodes -= 1
+            i += 1
+
+        if head1:
+            ptr.next = head1
+        else:
+            ptr.next = head2
+            
+        return ans
         
-        # ptr = res
-        # while ptr:
-        #     print(ptr.val)
-        #     ptr = ptr.next
-        
-        return res
             
