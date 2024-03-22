@@ -3,13 +3,10 @@ class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         graph = self.createAdjList(numCourses, prerequisites)
         classWithNoPrereqs = self.getNextClass(graph)
-        print(classWithNoPrereqs)
         while classWithNoPrereqs != None:
             self.removeClassFromGraph(classWithNoPrereqs, graph)
             classWithNoPrereqs = self.getNextClass(graph)
-            print(classWithNoPrereqs)
 
-        print(graph)
         return len(graph.keys()) == 0
     
     def removeClassFromGraph(self, classToRemove, graph):
