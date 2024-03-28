@@ -7,9 +7,7 @@
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         numOfNodes, nodesMap = self.getNodesData(head)
-        print(nodesMap)
         nodeToRemove = (numOfNodes - n)
-        print(nodeToRemove)
         if nodeToRemove == 0:
             return nodesMap.get(1, None)
         else:
